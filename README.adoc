@@ -25,7 +25,7 @@ This is the list of queries compared to B&L endpoints
 |===
 | Query | Endpoint |  Description 
 
-| link:offeringSearch.adoc[offeringSearch]
+| link:offering-search.adoc[offeringSearch]
 | `GET course`
 | Open search courses with multiple parameters
 
