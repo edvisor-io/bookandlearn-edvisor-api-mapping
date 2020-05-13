@@ -1,2 +1,6 @@
 Book&Learn to Edvisor API mapping
 =================================
+
+Reference to migrate Book&Learn API implementation to Edvisor GraphQL API
+
+- link:courses.adoc[Courses]
