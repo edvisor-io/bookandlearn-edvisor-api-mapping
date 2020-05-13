@@ -1,0 +1,10 @@
+Courses 
+=======
+
+.Endpoints 2 queries / mutations
+| ===
+| B&L | Edvisor | Description
+
+| GET course
+| offeringList
+| In Edvisor all products are called offerings, if we want to look for course we have to user `offeringType` 
