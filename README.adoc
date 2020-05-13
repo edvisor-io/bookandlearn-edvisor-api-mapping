@@ -1,6 +1,49 @@
 Book&Learn to Edvisor API mapping
 =================================
 
-Reference to migrate Book&Learn API implementation to Edvisor GraphQL API
+Reference guide to migrate aplications from https://docs.api.bookandlearn.com[Book&Learn API] to https://docs.edvisor.io/#api-reference:[Edvisor GraphQL API]
 
-- link:courses.adoc[Courses]
+NOTE: This guide assumes you have some familiarity with GraphQL. You can find more information
+
+== Offerings
+
+In Edvisor all products are called Offerings and there are 5 types 
+
+,===
+offering_type_id, code_name, b&l equivalent
+
+1, COURSE, Course
+2, ACCOMMODATION, Accommodation
+3, SERVICE, School Services
+4, AGENCY_ACCOMMODATION, -
+5, AGENCY_SERVICE, School Services
+6, PACKAGE, -
+,===
+
+This is the list of queries compared to B&L endpoints 
+
+|===
+| Query | Endpoint |  Description 
+
+| link:offeringSearch.adoc[`offeringSearch`]
+| `GET course`
+| Open search courses with multiple parameters
+
+.2+| `offeringsList`
+| `GET /course/{courseId}/accommodation`
+| Find school accommodations using `offeringTypeId: 2`
+
+| `GET /course/{courseId}/associatedService`
+| Find school services using `offeringTypeId: 2`
+
+| `offering`
+| `GET /course/{courseId}`
+| Get detailed course information
+
+| `generateQuotePrice`
+| `POST /course/{courseId}/draft`
+| Get price of multiple services (offerings)
+|===
+
+
+
