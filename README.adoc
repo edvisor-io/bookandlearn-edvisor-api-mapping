@@ -10,7 +10,7 @@ NOTE: This guide assumes you have some familiarity with GraphQL. You can find mo
 In Edvisor all products are called Offerings and there are 5 types 
 
 ,===
-offering_type_id, code_name, b&l equivalent
+offering_type_id, code_name, B&L type
 
 1, COURSE, Course
 2, ACCOMMODATION, Accommodation
@@ -25,22 +25,22 @@ This is the list of queries compared to B&L endpoints
 |===
 | Query | Endpoint |  Description 
 
-| link:offeringSearch.adoc[`offeringSearch`]
+| link:offeringSearch.adoc[offeringSearch]
 | `GET course`
 | Open search courses with multiple parameters
 
-.2+| `offeringsList`
+.2+| offeringsList
 | `GET /course/{courseId}/accommodation`
 | Find school accommodations using `offeringTypeId: 2`
 
 | `GET /course/{courseId}/associatedService`
 | Find school services using `offeringTypeId: 2`
 
-| `offering`
+| offering
 | `GET /course/{courseId}`
 | Get detailed course information
 
-| `generateQuotePrice`
+| generateQuotePrice
 | `POST /course/{courseId}/draft`
 | Get price of multiple services (offerings)
 |===

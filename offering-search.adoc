@@ -1,0 +1,48 @@
+Offering Search Query
+=====================
+
+```
+query {
+    offeringSearch(filter: OfferingSearchResultFilter){
+        OfferingCourseSearchResult
+    }
+}
+```
+
+== Filter
+
+|===
+| Edvisor | B&L | Notes 
+
+| offeringTypesIds
+| -
+| To look for courses you have to add `offeringTypesIds: 1`
+
+| googlePlaceIds
+| city, countryCode 
+| You can send multiple places and a place can be a city or country. To get available options use `offeringSearchFilterOptions` query
+
+| offeringCourseCategoryIds
+| courseType
+| You can send multiple categories, you can get availabe categories using `offeringSearchFilterOptions` and `offeringCourseCategories` query
+
+| schoolIds
+| institute
+| You can look for multiple school ids. Please note that this referes to the campus
+
+| startDate
+| startDate
+| 
+|===
+
+== Object parity
+
+
+
+
+
+== Example 
+
+
+
+
