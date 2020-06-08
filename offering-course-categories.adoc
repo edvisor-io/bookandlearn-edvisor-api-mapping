@@ -1,0 +1,29 @@
+# Course Catgories
+
+In Edvisor there is a single property to define the type and category of a course. This is the query to get all categories 
+
+.offeringCourseCategoryQuery.gql
+[source,graphql]
+...
+query  {
+  offeringCourseCategories{
+    offeringCourseCategoryId
+    left
+    right
+    depth
+  }
+}
+...
+
+As you'll see by the properties `left` and `right` categories has a hierarchical structure as they use a link:https://en.wikipedia.org/wiki/Nested_set_model[Nested Set Model]. 
+
+We can consider the first level of the hierarchy (`depth = 0`) as the `courseType`, for example: 
+
+- LANGUAGES
+- VOCATIONAL
+- HIGHER_EDUCATION
+
+And the second and third level of the hierarchy as the category
+
+- ENGLISH > ENGLISH_PLUS
+- ENGLISH > JUNIOR_PROGRAM

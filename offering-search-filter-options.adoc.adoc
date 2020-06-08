@@ -1,0 +1,37 @@
+Offering Search FilterOptions
+==============================
+
+Query to look for existing options to search for courses. Returns a list of all schools (campuses), categories and googleplaces ids (cities, countries) thahave at least one course avilable
+
+.offeringSearchFilterOptions.gql
+[source, graphql]
+....
+query{
+  offeringSearchFilterOptions{
+    schools{
+      name
+      schoolId
+      
+      schoolCompany{
+        schoolCompanyId
+        name
+      }
+    }
+    
+    offeringCourseCategories{
+      left
+      right
+      depth
+      codeName
+    }
+    
+    schoolGooglePlaces{
+      googlePlaceId
+      translation
+    }
+  }
+}
+....
+
+
+NOTE: The query doesn't have arguments other than  `schoolIds` and doesn't have pagination.

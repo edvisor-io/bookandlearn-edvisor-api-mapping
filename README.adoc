@@ -25,9 +25,16 @@ This is the list of queries compared to B&L endpoints
 |===
 | Query | Endpoint |  Description 
 
-| link:offering-search.adoc[offeringSearch]
+| offeringSearch
 | `GET course`
-| Open search courses with multiple parameters
+| Open search courses with multiple parameters, link:offering-search.adoc[See example]
+
+.2+| offeringSearchFilterOptions
+| GET country?courseType&CourseCategory
+.2+| Query is used to get parameters that can be used to look for courses link:offering-search-filter-options.adoc[See example]
+
+| GET city?courseType&courseCategory&countryCode
+
 
 .2+| offeringsList
 | `GET /course/{courseId}/accommodation`
@@ -43,6 +50,14 @@ This is the list of queries compared to B&L endpoints
 | generateQuotePrice
 | `POST /course/{courseId}/draft`
 | Get price of multiple services (offerings)
+
+| agencyCompanyCurrencyRates
+| `GET /currencyRates/{currencyISO}`
+| Return a list of exchange rates. Returns data only when agency enter currency rates manually
+
+| offeringCourseCategories
+| GET `/courseCategory?courseType`
+| Return a list of categories using a nested tree structure link:offering-course-categories.adoc[See example]
 |===
 
 
