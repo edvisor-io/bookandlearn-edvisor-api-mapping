@@ -35,11 +35,6 @@ query {
 | 
 |===
 
-== Object
-
-TODO 
-
-
 == Example 
 
 

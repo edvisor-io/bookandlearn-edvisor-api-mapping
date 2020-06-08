@@ -6,32 +6,62 @@ Query to look for existing options to search for courses. Returns a list of all 
 .offeringSearchFilterOptions.gql
 [source, graphql]
 ....
-query{
-  offeringSearchFilterOptions{
-    schools{
-      name
-      schoolId
-      
-      schoolCompany{
-        schoolCompanyId
-        name
-      }
-    }
-    
-    offeringCourseCategories{
-      left
-      right
-      depth
-      codeName
-    }
-    
-    schoolGooglePlaces{
+query  {
+  offeringCourseCategories(filter: OfferingSearchFilterOptionsFilter){
+    # OfferingSearchFilterOptionsResult
+  }
+}
+....
+
+NOTE: The query doesn't have arguments other than  `schoolIds` and doesn't have pagination.
+
+== Example to get locations
+
+The following query will return all locations where a course is offered. You can change locations name by sending a different `languageId`
+
+.offeringSearchFilterOptionsForLocation.gql
+[soruce,graphql]
+....
+query offeringSearchFilterOptionsForLocation($languageId: Int) {
+  offeringSearchFilterOptions {
+    schoolGooglePlaces {
       googlePlaceId
-      translation
+      countryId
+      cityName: translation(languageId: $languageId)
+      country {
+        countryName: nameTranslation(languageId: $languageId)
+      }
     }
   }
 }
 ....
 
+.Variables
+[source,json]
+....
+{
+    "languageId": 1
+}
+....
 
-NOTE: The query doesn't have arguments other than  `schoolIds` and doesn't have pagination.
+
+== Example to get schools (campuses)
+
+Yu can also look for schools
+
+.offeringSearchFilterOptionsForSchools.gql
+[soruce,graphql]
+....
+query offeringSearchFilterOptionsForSchools {
+  offeringSearchFilterOptions {
+    schools{
+      name
+      schoolId
+      schoolCompany{
+        schoolCompanyId
+        name
+      }
+    }
+  }
+}
+....

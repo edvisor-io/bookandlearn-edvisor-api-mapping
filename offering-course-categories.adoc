@@ -1,19 +1,17 @@
-# Course Catgories
+Offering Search Query
+=====================
 
 In Edvisor there is a single property to define the type and category of a course. This is the query to get all categories 
 
 .offeringCourseCategoryQuery.gql
 [source,graphql]
-...
+....
 query  {
-  offeringCourseCategories{
-    offeringCourseCategoryId
-    left
-    right
-    depth
+  offeringCourseCategories(filter: OfferingSearchFilterOptionsFilter){
+    # OfferingSearchFilterOptionsResult
   }
 }
-...
+....
 
 As you'll see by the properties `left` and `right` categories has a hierarchical structure as they use a link:https://en.wikipedia.org/wiki/Nested_set_model[Nested Set Model]. 
 
@@ -27,3 +25,41 @@ And the second and third level of the hierarchy as the category
 
 - ENGLISH > ENGLISH_PLUS
 - ENGLISH > JUNIOR_PROGRAM
+
+
+== Example to by course type
+
+There is an additional query to get available categories, you can use the followign example to get them and you may also want to fetch al categories to kwno the hierarchy
+
+.offeringSearchFilterOptionsForLocation.gql
+[soruce,graphql]
+....
+uery offeringSearchFilterOptionsForCourseType($filter: OfferingSearchFilterOptionsFilter) {
+  offeringSearchFilterOptions(filter: $filter) {
+    offeringCourseCategories {
+      offeringCourseCategoryId
+      codeName
+      left
+      right
+      depth
+    }
+  }
+  
+  offeringCourseCategories {
+    offeringCourseCategoryId
+    left
+    right
+    depth
+    codeName
+    __typename
+  }
+}
+....
+
+.Variables
+[source,json]
+....
+{
+    "filter": {}
+}
+....

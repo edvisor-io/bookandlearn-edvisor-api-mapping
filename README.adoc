@@ -14,12 +14,12 @@ NOTE: Some endpoints or properties may not have a corresponding counterpart.
 
 | offeringSearch
 | `GET course`
-| Open search courses with multiple parameters, link:offering-search.adoc[See example]
+| Open search courses with multiple parameters, link:offering-search.adoc[See more]
 
 .3+| offeringSearchFilterOptions
 | `GET institute?courseType&CourseCategory`
 
-.3+| Query to get parameters that can be used to look for courses: schools, places and course categories link:offering-search-filter-options.adoc[See example]
+.3+| Query to get parameters that can be used to look for courses: schools, places and course categories link:offering-search-filter-options.adoc[See more]
 
 | `GET city?courseType&courseCategory&countryCode`
 | `GET country?courseType&courseCategory&countryCode`
@@ -38,15 +38,15 @@ NOTE: Some endpoints or properties may not have a corresponding counterpart.
 
 | generateQuotePrice
 | `POST /course/{courseId}/draft`
-| Get price of multiple services (offerings) link:generate-course-price.adoc[See example] 
+| Get price of multiple services (offerings) link:generate-course-price.adoc[See more] 
 
-| agencyCompanyCurrencyRates
+| currencies
 | `GET /currencyRates/{currencyISO}`
-| Return a list of exchange rates. Returns data only when agency enter currency rates manually
+| Return a list all currencies with the corresponding value to 1 USD link:currencies.adoc[See more]
 
 | offeringCourseCategories
 | GET `/courseCategory?courseType`
-| Return a list of categories using a nested tree structure link:offering-course-categories.adoc[See example]
+| Return a list of categories using a nested tree structure link:offering-course-categories.adoc[See more]
 |===
 
 == Common Models

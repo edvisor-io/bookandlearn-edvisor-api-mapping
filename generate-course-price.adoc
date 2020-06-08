@@ -9,13 +9,32 @@ query {
     items: [FindPriceQuoteItemInput], 
     params: FindPriceQuoteParams
   ){
-    totalPriceAmount
-    currency{
-      codeName
-    }
+    # QuotePrice
   }
 }
 ```
+
+== Params
+
+There are multiple parameters that may affect the price and they are part of the `FindPriceQuoteParams` model
+|===
+| Param | Description
+
+| exactStudentAge
+| Some courses may have restrictions of additional fees based on student age
+
+| currencyId
+| ID of the currency the price will be shown. You can send `-1` to get original currency See link:currencies.adoc to get the full list
+
+| studentNationalityId
+| Could be used to get market promotions
+
+| agencyLocationCountryId
+| Could be used to get market promotions
+
+| studentCurrentLocationCountryId
+| This is used to determine whether the student is onShort or offShore. If this field is null, then the student is considered offShore.
+|===
 
 == Example 
 
@@ -23,120 +42,60 @@ query {
 .offeringSearchForCourseOfferingsQuery.gql
 [source, graphql]
 ....
-query offeringSearchForCourseOfferings(
-  $agencyId: Int, 
-  $nationalityId: Int, 
-  $schoolIds: [Int], 
-  $currentCountryId: Int, 
-  $courseCategories: [Int], 
-  $durationTypeId: Int, 
-  $durationAmount: IntegerRangeInput, 
-  $languageId: Int, 
-  $locations: [String], 
-  $startDate: DateOnlyRangeInput, 
-  $age: IntegerRangeInput,
-  $pagination: PaginationInput!
+query getPrice(
+  $items: [FindPriceQuoteItemInput], 
+  $params: FindPriceQuoteParams
 ) {
-  offeringSearch(filter: {
-    offeringTypeIds: [1], 
-    nationalityId: $nationalityId, 
-    currentCountryId: $currentCountryId, 
-    schoolIds: $schoolIds, 
-    offeringCourseCategoryIds: $courseCategories, 
-    durationTypeId: $durationTypeId, 
-    durationAmount: $durationAmount, 
-    googlePlaceIds: $locations, 
-    startDate: $startDate, 
-    agencyId: $agencyId, 
-    pagination: $pagination,
-    age: $age
-  }) {
-    ... on OfferingCourseSearchResult {
-      offeringCourseSearchResultId: offeringId
-      startDate
-      durationAmount
-      currencyId
-      durationType {
-        durationTypeId
-        codeName
-        __typename
-      }
-      offering {
-        offeringId
-        name(languageId: $languageId)
-        offeringTypeId
-        defaultLanguageId
-        offeringDescriptions {
-          offeringDescriptionId
-          languageId
-          description
-          __typename
-        }
-        reqMinAge
-        reqMaxAge
-        reqMinDurationAmount
-        reqMinDurationTypeId
-        reqMaxDurationAmount
-        reqMaxDurationTypeId
-        offeringCourse {
-          offeringCourseId: offeringId
-          offeringCourseCategory {
-            offeringCourseCategoryId
-            codeName
-            __typename
-          }
-          offeringTimetableTemplate {
-            offeringTimetableTemplateId
-            hoursPerWeek
-            __typename
-          }
-          offeringStartDateDerived {
-            startDate
-            __typename
-          }
-          offeringPriceTemplate {
-            offeringPriceTemplateId
-            offeringPrices {
-              offeringPriceId
-              minDuration
-              maxDuration
-              durationTypeId
-              amountIsPerDuration
-              __typename
-            }
-            __typename
-          }
-          __typename
-        }
-        school {
-          schoolId
-          name
-          googlePlaceId
-          agencyRank
-          schoolBannerFile {
-            fileId
-            url
-            __typename
-          }
-          googlePlace {
-            googlePlaceId
-            translation(languageId: $languageId)
-            __typename
-          }
-          schoolDurationTypeDefinitions {
-            schoolDurationTypeDefinitionId
-            durationTypeId
-            definitionDurationTypeId
-            definitionDuration
-            __typename
-          }
-          __typename
-        }
-        __typename
-      }
+  generateQuotePrice (
+    items: $items, 
+    params: $params
+  ) {
+    totalPriceAmount
+    currencyId
+    generatedOn
+    quotePriceItems {
       __typename
+
+      ... on CoursePriceItem {
+        offeringId
+        originalPriceAmount
+        priceAmount
+        currency {
+          code
+          currencyId
+          symbol
+          oneUsd
+        }
+        priceUsd
+      }
+
+      ... on AccommodationPriceItem {
+        offeringId
+        originalPriceAmount
+        priceAmount
+        currency {
+          code
+          currencyId
+          symbol
+          oneUsd
+        }
+        priceUsd
+      }
+
+      ... on ServicePriceItem {
+        offeringId
+        originalPriceAmount
+        priceAmount
+        currency {
+          code
+          currencyId
+          symbol
+          oneUsd
+        }
+        priceUsd
+      }
+      
     }
-    __typename
   }
 }
 ....
@@ -145,11 +104,20 @@ query offeringSearchForCourseOfferings(
 [source,json]
 ....
 {
-  "languageId":1,
-  "pagination": {
-    "limit": 25,
-    "offset": 0
-  }
+    "items": [
+        {
+            "offeringId": 1,
+            "startDate": "2020-06-08",
+            "durationAmount": 4,
+            "durationTypeId": 3
+        }
+    ],
+    "params": {
+        "studentNationalityId": 148,
+        "agencyLocationCountryId": 148,
+        "exactStudentAge": 18,
+        "currencyId": -1
+    }
 }
 ....
 

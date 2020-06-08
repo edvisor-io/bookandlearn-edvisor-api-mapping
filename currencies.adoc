@@ -1,0 +1,29 @@
+Currencies
+==========
+
+Query that will return available currencies with the current value to USD. This could be used to get exchange rate
+
+```
+query {
+  currencies{
+    # [Currency]
+  }
+}
+```
+
+== Example
+
+.offeringSearchForCourseOfferingsQuery.gql
+[source, graphql]
+....
+query getCurrencies{
+  currencies{
+    currencyId
+    code
+    symbol
+    oneUsd
+    modified
+  }
+}
+....
+
