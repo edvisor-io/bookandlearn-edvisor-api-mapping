@@ -1,0 +1,156 @@
+Generate Quote Price
+=====================
+
+Filter to get prices from multiple items at once
+
+```
+query {
+  generateQuotePrice(
+    items: [FindPriceQuoteItemInput], 
+    params: FindPriceQuoteParams
+  ){
+    totalPriceAmount
+    currency{
+      codeName
+    }
+  }
+}
+```
+
+== Example 
+
+
+.offeringSearchForCourseOfferingsQuery.gql
+[source, graphql]
+....
+query offeringSearchForCourseOfferings(
+  $agencyId: Int, 
+  $nationalityId: Int, 
+  $schoolIds: [Int], 
+  $currentCountryId: Int, 
+  $courseCategories: [Int], 
+  $durationTypeId: Int, 
+  $durationAmount: IntegerRangeInput, 
+  $languageId: Int, 
+  $locations: [String], 
+  $startDate: DateOnlyRangeInput, 
+  $age: IntegerRangeInput,
+  $pagination: PaginationInput!
+) {
+  offeringSearch(filter: {
+    offeringTypeIds: [1], 
+    nationalityId: $nationalityId, 
+    currentCountryId: $currentCountryId, 
+    schoolIds: $schoolIds, 
+    offeringCourseCategoryIds: $courseCategories, 
+    durationTypeId: $durationTypeId, 
+    durationAmount: $durationAmount, 
+    googlePlaceIds: $locations, 
+    startDate: $startDate, 
+    agencyId: $agencyId, 
+    pagination: $pagination,
+    age: $age
+  }) {
+    ... on OfferingCourseSearchResult {
+      offeringCourseSearchResultId: offeringId
+      startDate
+      durationAmount
+      currencyId
+      durationType {
+        durationTypeId
+        codeName
+        __typename
+      }
+      offering {
+        offeringId
+        name(languageId: $languageId)
+        offeringTypeId
+        defaultLanguageId
+        offeringDescriptions {
+          offeringDescriptionId
+          languageId
+          description
+          __typename
+        }
+        reqMinAge
+        reqMaxAge
+        reqMinDurationAmount
+        reqMinDurationTypeId
+        reqMaxDurationAmount
+        reqMaxDurationTypeId
+        offeringCourse {
+          offeringCourseId: offeringId
+          offeringCourseCategory {
+            offeringCourseCategoryId
+            codeName
+            __typename
+          }
+          offeringTimetableTemplate {
+            offeringTimetableTemplateId
+            hoursPerWeek
+            __typename
+          }
+          offeringStartDateDerived {
+            startDate
+            __typename
+          }
+          offeringPriceTemplate {
+            offeringPriceTemplateId
+            offeringPrices {
+              offeringPriceId
+              minDuration
+              maxDuration
+              durationTypeId
+              amountIsPerDuration
+              __typename
+            }
+            __typename
+          }
+          __typename
+        }
+        school {
+          schoolId
+          name
+          googlePlaceId
+          agencyRank
+          schoolBannerFile {
+            fileId
+            url
+            __typename
+          }
+          googlePlace {
+            googlePlaceId
+            translation(languageId: $languageId)
+            __typename
+          }
+          schoolDurationTypeDefinitions {
+            schoolDurationTypeDefinitionId
+            durationTypeId
+            definitionDurationTypeId
+            definitionDuration
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+....
+
+.Variables
+[source,json]
+....
+{
+  "languageId":1,
+  "pagination": {
+    "limit": 25,
+    "offset": 0
+  }
+}
+....
+
+

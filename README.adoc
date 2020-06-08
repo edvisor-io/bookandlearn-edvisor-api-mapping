@@ -3,37 +3,26 @@ Book&Learn to Edvisor API mapping
 
 Reference guide to migrate aplications from https://docs.api.bookandlearn.com[Book&Learn API] to https://docs.edvisor.io/#api-reference:[Edvisor GraphQL API]
 
-NOTE: This guide assumes you have some familiarity with GraphQL. You can find more information
+== Queries
 
-== Offerings
+This table contains most common used endpoints in Book&Learn to theri corresponding query. 
 
-In Edvisor all products are called Offerings and there are 5 types 
-
-,===
-offering_type_id, code_name, B&L type
-
-1, COURSE, Course
-2, ACCOMMODATION, Accommodation
-3, SERVICE, School Services
-4, AGENCY_ACCOMMODATION, -
-5, AGENCY_SERVICE, School Services
-6, PACKAGE, -
-,===
-
-This is the list of queries compared to B&L endpoints 
+NOTE: Some endpoints or properties may not have a corresponding counterpart.
 
 |===
-| Query | Endpoint |  Description 
+| Query | Endpoint (B&L) |  Description 
 
 | offeringSearch
 | `GET course`
 | Open search courses with multiple parameters, link:offering-search.adoc[See example]
 
-.2+| offeringSearchFilterOptions
-| GET country?courseType&CourseCategory
-.2+| Query is used to get parameters that can be used to look for courses link:offering-search-filter-options.adoc[See example]
+.3+| offeringSearchFilterOptions
+| `GET institute?courseType&CourseCategory`
 
-| GET city?courseType&courseCategory&countryCode
+.3+| Query to get parameters that can be used to look for courses: schools, places and course categories link:offering-search-filter-options.adoc[See example]
+
+| `GET city?courseType&courseCategory&countryCode`
+| `GET country?courseType&courseCategory&countryCode`
 
 
 .2+| offeringsList
@@ -49,7 +38,7 @@ This is the list of queries compared to B&L endpoints
 
 | generateQuotePrice
 | `POST /course/{courseId}/draft`
-| Get price of multiple services (offerings)
+| Get price of multiple services (offerings) link:generate-course-price.adoc[See example] 
 
 | agencyCompanyCurrencyRates
 | `GET /currencyRates/{currencyISO}`
@@ -60,5 +49,18 @@ This is the list of queries compared to B&L endpoints
 | Return a list of categories using a nested tree structure link:offering-course-categories.adoc[See example]
 |===
 
+== Common Models
 
+In Edvisor all products are called Offerings and there are 5 types 
+
+,===
+offering_type_id, code_name, B&L type
+
+1, COURSE, Course
+2, ACCOMMODATION, Accommodation
+3, SERVICE, School Services
+4, AGENCY_ACCOMMODATION, -
+5, AGENCY_SERVICE, School Services
+6, PACKAGE, -
+,===
 
