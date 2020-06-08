@@ -47,6 +47,13 @@ NOTE: Some endpoints or properties may not have a corresponding counterpart.
 | offeringCourseCategories
 | GET `/courseCategory?courseType`
 | Return a list of categories using a nested tree structure link:offering-course-categories.adoc[See more]
+
+.2+| school
+| `GET /institute/{instituteId}`
+| School refers to campus and SchoolCompany refers to the School link:schools.adoc[See more]
+
+| `GET /institute/{instituteId}/facilities`
+| We leverage Graphql nested models to display school information in a single query. To get facilities, you have to include `schoolAmenity` field in the query
 |===
 
 == Common Models

@@ -1,0 +1,72 @@
+Schools
+==========
+
+Query to get schools by an schoolId
+
+[source, graphql]
+....
+query {
+  school(schoolId: Int{
+    # School
+  }
+}
+....
+
+== Example to get all data
+
+.offeringSearchForCourseOfferingsQuery.gql
+[source, graphql]
+....
+query getFullDataOfSchool($schoolId: Int!){
+ school(schoolId: $schoolId){
+    schoolId
+    schoolCompanyId
+    schoolCompany{
+      name
+      phone
+      address
+    }
+    
+    photo{
+      url
+    }
+    
+    email
+    website
+    address
+    instituteNumber
+    googlePlaceId
+    country{
+      code
+      continent
+      nameTranslation
+    }
+    
+    includeAutoHolidays
+    schoolBannerFile{
+      url
+    }
+    
+    schoolAmenities{
+      amenityType{
+        codeName
+      }
+    }
+    
+    schoolHighlights{
+      highlight
+      language{
+        code
+      }
+    }
+  }
+}
+....
+
+.Variables
+[source,json]
+....
+{
+  "schoolId": 1
+}
+....
