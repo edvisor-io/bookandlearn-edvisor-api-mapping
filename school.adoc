@@ -1,5 +1,5 @@
 Schools
-==========
+========
 
 Query to get schools by an schoolId
 
