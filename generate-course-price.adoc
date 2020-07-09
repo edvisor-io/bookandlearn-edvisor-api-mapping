@@ -43,60 +43,76 @@ There are multiple parameters that may affect the price and they are part of the
 [source, graphql]
 ....
 query getPrice(
-  $items: [FindPriceQuoteItemInput], 
+  $items: [FindPriceQuoteItemInput]
   $params: FindPriceQuoteParams
 ) {
-  generateQuotePrice (
-    items: $items, 
-    params: $params
-  ) {
+  generateQuotePrice (items: $items, params: $params) {
     totalPriceAmount
-    currencyId
+    currency { ...currency }
     generatedOn
+    
     quotePriceItems {
-      __typename
-
       ... on CoursePriceItem {
-        offeringId
+        offering{ ...offering }
+        currency{ ...currency }
+        fees { ...fees }
+        
         originalPriceAmount
         priceAmount
-        currency {
-          code
-          currencyId
-          symbol
-          oneUsd
-        }
         priceUsd
+        durationAmount
+        durationType{
+          codeName
+        }
       }
 
       ... on AccommodationPriceItem {
-        offeringId
+        offering{ ...offering }
+        currency{ ...currency }
+        fees { ...fees }
+        
         originalPriceAmount
         priceAmount
-        currency {
-          code
-          currencyId
-          symbol
-          oneUsd
-        }
         priceUsd
+        durationAmount
+        durationType{
+          codeName
+        }
       }
 
       ... on ServicePriceItem {
         offeringId
-        originalPriceAmount
-        priceAmount
-        currency {
-          code
-          currencyId
-          symbol
-          oneUsd
-        }
-        priceUsd
+        currency { ...currency }
       }
-      
     }
   }
+}
+
+fragment currency on Currency {
+  code
+  currencyId
+  symbol
+  oneUsd
+}
+
+fragment fees on FeePriceItem {
+  currency{ ...currency }
+  originalPriceAmount
+  
+  fee {
+    feeId
+    name
+    
+    feeType{
+      feeTypeId
+      name
+    }
+  }
+}
+
+fragment offering on Offering {
+  offeringId
+  name
 }
 ....
 
