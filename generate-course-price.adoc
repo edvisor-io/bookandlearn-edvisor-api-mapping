@@ -52,39 +52,46 @@ query getPrice(
     generatedOn
     
     quotePriceItems {
-      ... on CoursePriceItem {
-        offering{ ...offering }
-        currency{ ...currency }
-        fees { ...fees }
-        
-        originalPriceAmount
-        priceAmount
-        priceUsd
-        durationAmount
-        durationType{
-          codeName
-        }
-      }
-
-      ... on AccommodationPriceItem {
-        offering{ ...offering }
-        currency{ ...currency }
-        fees { ...fees }
-        
-        originalPriceAmount
-        priceAmount
-        priceUsd
-        durationAmount
-        durationType{
-          codeName
-        }
-      }
-
-      ... on ServicePriceItem {
-        offeringId
-        currency { ...currency }
-      }
+      ...priceItem
     }
+  }
+}
+
+fragment priceItem on QuotePriceItem {
+  ... on CoursePriceItem {
+    offering { ...offering }
+    currency { ...currency }
+    fees { ...fees }
+    discounts { ...discounts }        
+    
+    # Regular Price without discounts
+    originalPriceAmount
+
+    # Final price after discounts
+    priceAmount
+    
+    priceUsd
+    durationAmount
+    durationType { codeName }
+  }
+
+  ... on AccommodationPriceItem {
+    currency { ...currency }
+    fees { ...fees }
+    discounts { ...discounts }  
+    
+    originalPriceAmount
+    priceAmount
+    
+    priceUsd
+    durationAmount
+    durationType{ codeName }
+  }
+
+  ... on ServicePriceItem {
+    offeringId
+    currency { ...currency }
+    discounts { ...discounts }  
   }
 }
 
@@ -92,12 +99,12 @@ fragment currency on Currency {
   code
   currencyId
   symbol
-  oneUsd
 }
 
 fragment fees on FeePriceItem {
   currency{ ...currency }
   originalPriceAmount
+  discounts { ...discounts }
   
   fee {
     feeId
@@ -113,6 +120,61 @@ fragment fees on FeePriceItem {
 fragment offering on Offering {
   offeringId
   name
+}
+
+fragment promotionTypeSelection on PromotionTypeSelection {
+  promotion { name }
+}
+
+fragment discounts on DiscountItem{
+  ... on AmountOffDiscountItem {
+    priceDiscountAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on PercentageOffDiscountItem{
+    priceDiscountAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on DurationExtensionDiscountItem{
+    priceDiscountAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on OtherOfferingDiscountItem {
+    priceDiscountAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on FeeDiscountItem {
+    priceDiscountAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on CustomDiscountItem {
+    description
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on BonusCommissionDiscountItem {
+    bonusCommissionPriceAmount
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+
+  ... on OverrideDiscountItem {
+    priceDiscountAmount 
+    currency{ ...currency }
+    promotionTypeSelection{ ...promotionTypeSelection }
+  }
+  
+  __typename
 }
 ....
 
