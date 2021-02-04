@@ -7,7 +7,7 @@ Query to look for existing options to search for courses. Returns a list of all 
 [source, graphql]
 ....
 query  {
-  offeringCourseCategories(filter: OfferingSearchFilterOptionsFilter){
+  offeringSearchFilterOptions(filter: OfferingSearchFilterOptionsFilter){
     # OfferingSearchFilterOptionsResult
   }
 }
